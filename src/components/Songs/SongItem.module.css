@@ -1,0 +1,9 @@
+.song {
+    display: flex;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.song img {
+    width: 200px;
+}
