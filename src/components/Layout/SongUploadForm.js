@@ -1,35 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import Modal from "../UI/Modal";
 import Input from "../UI/Input/Input";
 import Button from "../UI/Card/Button/Button";
 import classes from './SongUploadForm.module.css';
 
+const initialState = {
+    name: '',
+    artist: '',
+    imgURL: ''
+}
+
+const reducer = (state, action) => {
+    if (action.type === 'NAME') {
+        return {
+            ...state, name: action.enteredName
+        }
+    }
+    if (action.type === 'ARTIST') {
+        return {
+            ...state, artist: action.entertedArtist
+        }
+    }
+    if (action.type === 'IMG') {
+        return {
+            ...state, imgURL: action.enteredImg
+        }
+    }
+}
+
 const SongUploadForm = (props) => {
-    const [name, setName] = useState('');
-    const [artist, setArtist] = useState('');
-    const [imgURL, setImgURL] = useState('');
+    const [state, dispatch] = useReducer(reducer, initialState);
+
 
     const nameChangeHandler = (e) => {
-        setName(e.target.value);
+        dispatch({ type: 'NAME', enteredName: e.target.value })
     };
 
     const artistChangeHandler = (e) => {
-        setArtist(e.target.value);
+        dispatch({ type: 'ARTIST', entertedArtist: e.target.value })
     };
 
     const imgURLChangeHandler = (e) => {
-        setImgURL(e.target.value);
+        dispatch({ type: 'IMG', enteredImg: e.target.value })
     };
 
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log({
-            name,
-            artist,
-            imgURL
-        });
-
+        console.log(state)
         //if successful, close the modal
         props.onHideUploadModal()
     }
@@ -41,26 +59,26 @@ const SongUploadForm = (props) => {
                     label="Name"
                     type="text"
                     placeholder="Song Name"
-                    value={name}
+                    value={state.name}
                     onChange={nameChangeHandler}
                 />
                 <Input
                     label="Artist"
                     type="text"
                     placeholder="Song Artist"
-                    value={artist}
+                    value={state.artist}
                     onChange={artistChangeHandler}
                 />
                 <Input
                     label="Cover Image URL"
                     type="text"
                     placeholder="Image URL"
-                    value={imgURL}
+                    value={state.imgURL}
                     onChange={imgURLChangeHandler}
                 />
                 <div className={classes.actions}>
                     <Button onClick={props.onHideUploadModal}>Close</Button>
-                    <Button type="submit">Add Song</Button>
+                    <Button type="submit" className={classes["add-button"]}>Add Song</Button>
                 </div>
             </form>
         </Modal>

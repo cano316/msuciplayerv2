@@ -4,7 +4,7 @@ import Songs from "./components/Songs/Songs";
 import SongUploadForm from "./components/Layout/SongUploadForm";
 
 function App() {
-  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(true);
 
   const showUploadModalHandler = () => {
     setShowUploadModal(true)

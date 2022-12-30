@@ -2,3 +2,14 @@
     display: flex;
     justify-content: space-around;
 }
+
+.add-button {
+    border: 1px solid #77C9B2;
+    background: #77C9B2;
+}
+
+.add-button:hover,
+.add-button:active {
+    background: #589483;
+    border-color: #589483;
+}
