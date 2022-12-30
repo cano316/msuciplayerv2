@@ -1,19 +1,20 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect, useContext } from "react";
 import Modal from "../UI/Modal";
 import Input from "../UI/Input/Input";
 import Button from "../UI/Card/Button/Button";
 import classes from './SongUploadForm.module.css';
+import SongContext from "../../store/song-context";
 
 const initialState = {
-    name: '',
+    songName: '',
     artist: '',
-    imgURL: ''
+    imgSrc: '',
 }
 
 const reducer = (state, action) => {
     if (action.type === 'NAME') {
         return {
-            ...state, name: action.enteredName
+            ...state, songName: action.enteredName, isValid: action.enteredName.trim().length > 0
         }
     }
     if (action.type === 'ARTIST') {
@@ -23,14 +24,17 @@ const reducer = (state, action) => {
     }
     if (action.type === 'IMG') {
         return {
-            ...state, imgURL: action.enteredImg
+            ...state, imgSrc: action.enteredImg
         }
     }
 }
 
 const SongUploadForm = (props) => {
+    const songCtx = useContext(SongContext);
+
     const [state, dispatch] = useReducer(reducer, initialState);
 
+    const [formIsValid, setFormIsValid] = useState(false);
 
     const nameChangeHandler = (e) => {
         dispatch({ type: 'NAME', enteredName: e.target.value })
@@ -44,12 +48,26 @@ const SongUploadForm = (props) => {
         dispatch({ type: 'IMG', enteredImg: e.target.value })
     };
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            console.log('checking form validation');
+            setFormIsValid(state.songName.trim().length > 1 && state.artist.trim().length > 1 && state.imgSrc.trim().length > 1);
+        }, 500);
+
+        return () => {
+            clearInterval(timer)
+        }
+    }, [state])
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(state)
-        //if successful, close the modal
-        props.onHideUploadModal()
+        if (formIsValid) {
+            songCtx.addSong(state);
+            //if successful, close the modal
+            props.onHideUploadModal();
+        } else {
+            console.log('error');
+        }
     }
 
     return (
@@ -78,7 +96,7 @@ const SongUploadForm = (props) => {
                 />
                 <div className={classes.actions}>
                     <Button onClick={props.onHideUploadModal}>Close</Button>
-                    <Button type="submit" className={classes["add-button"]}>Add Song</Button>
+                    <Button type="submit" className={classes["add-button"]} disabled={!formIsValid}>Add Song</Button>
                 </div>
             </form>
         </Modal>

@@ -1,11 +1,13 @@
+import { useContext } from "react";
 import SongItem from "./SongItem";
-import DUMMY_SONGS from "./DUMMY_SONGS";
 import Card from "../UI/Card/Card";
 import classes from './SongsList.module.css'
+import SongContext from "../../store/song-context";
 // this list will be wrapped in a Card component
 
-const SongsList = (props) => {
-    const songsListElements = DUMMY_SONGS.map(song => {
+const SongsList = () => {
+    const songCtx = useContext(SongContext);
+    const songsListElements = songCtx.songs.map(song => {
         return <SongItem
             key={song.id}
             songName={song.songName}

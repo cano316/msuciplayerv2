@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "./components/Layout/Header";
 import Songs from "./components/Songs/Songs";
 import SongUploadForm from "./components/Layout/SongUploadForm";
+import SongContextProvider from "./store/SongContextProvider";
 
 function App() {
   const [showUploadModal, setShowUploadModal] = useState(true);
@@ -15,11 +16,11 @@ function App() {
   };
 
   return (
-    <React.Fragment>
+    <SongContextProvider>
       {showUploadModal && <SongUploadForm onHideUploadModal={hideUploadModalHandler} />}
       <Header onShowUploadModal={showUploadModalHandler} />
       <Songs />
-    </React.Fragment>
+    </SongContextProvider>
   );
 }
 
