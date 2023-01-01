@@ -1,0 +1,13 @@
+.song-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.song-details img {
+    width: 400px;
+}
+
+.song-details button {
+    margin-top: 10px;
+}

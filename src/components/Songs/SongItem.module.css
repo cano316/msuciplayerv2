@@ -7,3 +7,27 @@
 .song img {
     width: 200px;
 }
+
+.headers {
+    margin-left: 15px;
+}
+
+/* .song h2 {}
+
+.song h3 {} */
+
+/* hides horizontal line on last child */
+hr:last-of-type {
+    display: none;
+}
+
+.details-button {
+    border: 1px solid #77C9B2;
+    background: #77C9B2;
+}
+
+.details-button:hover,
+.details-button:active {
+    background: #589483;
+    border-color: #589483;
+}

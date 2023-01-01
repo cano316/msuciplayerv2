@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useEffect, useContext } from "react";
 import Modal from "../UI/Modal";
 import Input from "../UI/Input/Input";
-import Button from "../UI/Card/Button/Button";
+import Button from "../UI/Button/Button";
 import classes from './SongUploadForm.module.css';
 import SongContext from "../../store/song-context";
 
@@ -50,7 +50,6 @@ const SongUploadForm = (props) => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log('checking form validation');
             setFormIsValid(state.songName.trim().length > 1 && state.artist.trim().length > 1 && state.imgSrc.trim().length > 1);
         }, 500);
 
