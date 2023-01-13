@@ -14,7 +14,7 @@ const initialState = {
 const reducer = (state, action) => {
     if (action.type === 'NAME') {
         return {
-            ...state, songName: action.enteredName, isValid: action.enteredName.trim().length > 0
+            ...state, songName: action.enteredName
         }
     }
     if (action.type === 'ARTIST') {

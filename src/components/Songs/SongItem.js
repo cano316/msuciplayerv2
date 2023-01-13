@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classes from './SongItem.module.css'
 import Button from '../UI/Button/Button';
 import SongDetailsModal from './SongDetailsModal/SongDetailsModal';
+import SongContext from '../../store/song-context';
 
 const SongItem = (props) => {
+    const songCtx = useContext(SongContext)
     const [showSongDetailsModal, setShowSongDetailsModal] = useState(false);
 
     const handleClick = () => {
@@ -12,6 +14,11 @@ const SongItem = (props) => {
 
     const hideModalHandler = () => {
         setShowSongDetailsModal(false)
+    }
+
+    const playSongHandler = () => {
+        // songCtx.playSong(song)
+        songCtx.playSong(props)
     }
 
     return (
@@ -23,6 +30,7 @@ const SongItem = (props) => {
                     <h2>{props.songName}</h2>
                     <h3>{props.artist}</h3>
                     <Button className={classes["details-button"]} onClick={handleClick}>Details</Button>
+                    <Button onClick={playSongHandler}>Play</Button>
                 </div>
             </li>
             <hr />
