@@ -9,7 +9,7 @@ const SongsList = () => {
     const songCtx = useContext(SongContext);
     const songsListElements = songCtx.songs.map(song => {
         return <SongItem
-            key={song.id}
+            key={song._id}
             songName={song.songName}
             artist={song.artist}
             imgSrc={song.imgSrc}

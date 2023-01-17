@@ -1,9 +1,14 @@
+require('dotenv').config({ path: '../.env' });
 const mongoose = require('mongoose');
 const Song = require('./models/Song');
 
+
+const DB_URL = process.env.DB_URL;
+
 main().catch(e => console.log(e));
 async function main() {
-    await mongoose.connect('mongodb://localhost:27017/beatfolio');
+    mongoose.set('strictQuery', false)
+    await mongoose.connect(DB_URL, { useNewUrlParser: true });
     console.log('CONNECTED TO MONGODB')
 };
 

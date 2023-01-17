@@ -1,12 +1,16 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import SongContext from "./song-context";
-import DUMMY_SONGS from "../components/Songs/DUMMY_SONGS";
-const defaultSongs = DUMMY_SONGS;
+import { getAllSongs } from "../api";
 
 const SongContextProvider = (props) => {
-    const [songs, setSongs] = useState(defaultSongs);
+    const [songs, setSongs] = useState([]);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentSong, setCurrentSong] = useState(null);
+
+    useEffect(() => {
+        getAllSongs().then(songs => setSongs(songs))
+    }, []);
+
     const addSongHandler = (song) => {
         const ranId = Math.floor(Math.random() * 100);
         song.id = ranId;

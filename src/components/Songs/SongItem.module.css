@@ -5,16 +5,18 @@
 }
 
 .song img {
-    width: 200px;
+    width: 100px;
+    height: 100px;
+}
+
+.song h2 {
+    font-size: 20px;
+    ;
 }
 
 .headers {
     margin-left: 15px;
 }
-
-/* .song h2 {}
-
-.song h3 {} */
 
 /* hides horizontal line on last child */
 hr:last-of-type {
