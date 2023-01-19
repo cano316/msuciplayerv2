@@ -11,11 +11,11 @@ export const getAllSongs = async () => {
     }
 };
 
-export const addSong = async (song) => {
+export const apiSongSubmit = async (song) => {
     try {
-        const results = await axios.post(baseUrl, song);
-        return results.data;
+        const results = await axios.post(`${baseUrl}/api/songs`, song);
+        return results;
     } catch (error) {
-
+        return null
     }
-}
+};

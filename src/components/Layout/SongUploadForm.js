@@ -4,6 +4,7 @@ import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
 import classes from './SongUploadForm.module.css';
 import SongContext from "../../store/song-context";
+import { apiSongSubmit } from "../../api";
 
 const initialState = {
     songName: '',
@@ -61,7 +62,9 @@ const SongUploadForm = (props) => {
     const submitHandler = (e) => {
         e.preventDefault();
         if (formIsValid) {
-            songCtx.addSong(state);
+            // this makes an API call
+            apiSongSubmit(state)
+                .then(data => console.log(data))
             //if successful, close the modal
             props.onHideUploadModal();
         } else {

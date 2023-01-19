@@ -41,4 +41,4 @@ const arrayOfSongs = [
 
 Song.insertMany(arrayOfSongs)
     .then(songs => console.log(songs))
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));

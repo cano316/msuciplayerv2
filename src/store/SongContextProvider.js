@@ -1,15 +1,10 @@
 import React, { useState, useMemo, useEffect } from "react";
 import SongContext from "./song-context";
-import { getAllSongs } from "../api";
 
 const SongContextProvider = (props) => {
     const [songs, setSongs] = useState([]);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentSong, setCurrentSong] = useState(null);
-
-    useEffect(() => {
-        getAllSongs().then(songs => setSongs(songs))
-    }, []);
 
     const addSongHandler = (song) => {
         const ranId = Math.floor(Math.random() * 100);
@@ -18,6 +13,10 @@ const SongContextProvider = (props) => {
             return [song, ...prevState]
         })
     };
+
+    const setAllSongs = (data) => {
+        setSongs(data);
+    }
 
     const removeSongHandler = (id) => {
         console.log('feature doesnt work yet')
@@ -36,7 +35,8 @@ const SongContextProvider = (props) => {
             removeSong: removeSongHandler,
             isPlaying: isPlaying,
             playSong: playSongHandler,
-            currentSong: currentSong
+            currentSong: currentSong,
+            setAllSongs: setAllSongs
         };
     }, [songs, isPlaying, currentSong])
     return (
