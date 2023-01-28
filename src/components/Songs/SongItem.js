@@ -29,6 +29,7 @@ const SongItem = (props) => {
                 <div className={classes.headers}>
                     <h2>{props.songName}</h2>
                     <h3>{props.artist}</h3>
+                    <audio controls src={props.audio}></audio>
                     <Button className={classes["details-button"]} onClick={handleClick}>Details</Button>
                     <Button onClick={playSongHandler}>Play</Button>
                 </div>

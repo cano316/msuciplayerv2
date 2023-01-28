@@ -9,7 +9,8 @@ import { apiSongSubmit } from "../../api";
 const initialState = {
     songName: '',
     artist: '',
-    imgSrc: '',
+    imgSrc: null,
+    audio: null,
 }
 
 const reducer = (state, action) => {
@@ -28,13 +29,18 @@ const reducer = (state, action) => {
             ...state, imgSrc: action.enteredImg
         }
     }
+    if (action.type === 'AUDIO') {
+        return {
+            ...state, audio: action.enteredAudio
+        }
+    }
 }
 
 const SongUploadForm = (props) => {
     const songCtx = useContext(SongContext);
 
     const [state, dispatch] = useReducer(reducer, initialState);
-
+    const [isLoading, setIsLoading] = useState(false);
     const [formIsValid, setFormIsValid] = useState(false);
 
     const nameChangeHandler = (e) => {
@@ -45,13 +51,17 @@ const SongUploadForm = (props) => {
         dispatch({ type: 'ARTIST', entertedArtist: e.target.value })
     };
 
-    const imgURLChangeHandler = (e) => {
-        dispatch({ type: 'IMG', enteredImg: e.target.value })
+    const onImageFileChange = (e) => {
+        dispatch({ type: 'IMG', enteredImg: e.target.files[0] })
+    };
+
+    const onSongFileChange = (e) => {
+        dispatch({ type: 'AUDIO', enteredAudio: e.target.files[0] })
     };
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setFormIsValid(state.songName.trim().length > 1 && state.artist.trim().length > 1 && state.imgSrc.trim().length > 1);
+            setFormIsValid(state.songName.trim().length > 1 && state.artist.trim().length > 1 && state.imgSrc);
         }, 500);
 
         return () => {
@@ -61,11 +71,14 @@ const SongUploadForm = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        // console.log(state)
+        // setIsLoading(true);
         if (formIsValid) {
-            // this makes an API call
+            // this makes an API POST request
             apiSongSubmit(state)
                 .then(data => console.log(data))
-            //if successful, close the modal
+                .catch(e => console.log(e))
+            // setIsLoading(false);
             props.onHideUploadModal();
         } else {
             console.log('error');
@@ -90,16 +103,22 @@ const SongUploadForm = (props) => {
                     onChange={artistChangeHandler}
                 />
                 <Input
-                    label="Cover Image URL"
-                    type="text"
-                    placeholder="Image URL"
-                    value={state.imgURL}
-                    onChange={imgURLChangeHandler}
+                    label="Cover Image"
+                    type="file"
+                    placeholder="Image"
+                    onChange={onImageFileChange}
+                />
+                <Input
+                    label="Song File"
+                    type="file"
+                    placeholder="Upload audio file"
+                    onChange={onSongFileChange}
                 />
                 <div className={classes.actions}>
                     <Button onClick={props.onHideUploadModal}>Close</Button>
                     <Button type="submit" className={classes["add-button"]} disabled={!formIsValid}>Add Song</Button>
                 </div>
+                {isLoading && <p>Uploading...</p>}
             </form>
         </Modal>
     )

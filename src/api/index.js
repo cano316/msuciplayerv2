@@ -11,11 +11,15 @@ export const getAllSongs = async () => {
     }
 };
 
-export const apiSongSubmit = async (song) => {
+export const apiSongSubmit = async (formData) => {
     try {
-        const results = await axios.post(`${baseUrl}/api/songs`, song);
+        const results = await axios.post(`${baseUrl}/api/songs`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
         return results;
     } catch (error) {
-        return null
+        return error
     }
 };

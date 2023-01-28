@@ -4,7 +4,7 @@ import Card from "../UI/Card/Card";
 import classes from './SongsList.module.css'
 import SongContext from "../../store/song-context";
 import { getAllSongs } from "../../api";
-// this list will be wrapped in a Card component
+
 
 const SongsList = () => {
     const songCtx = useContext(SongContext);
@@ -20,7 +20,8 @@ const SongsList = () => {
             key={song._id}
             songName={song.songName}
             artist={song.artist}
-            imgSrc={song.imgSrc}
+            imgSrc={song.image.url}
+            audio={song.audio.url}
         />
     });
 

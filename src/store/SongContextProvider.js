@@ -7,8 +7,6 @@ const SongContextProvider = (props) => {
     const [currentSong, setCurrentSong] = useState(null);
 
     const addSongHandler = (song) => {
-        const ranId = Math.floor(Math.random() * 100);
-        song.id = ranId;
         setSongs(prevState => {
             return [song, ...prevState]
         })
@@ -38,7 +36,8 @@ const SongContextProvider = (props) => {
             currentSong: currentSong,
             setAllSongs: setAllSongs
         };
-    }, [songs, isPlaying, currentSong])
+    }, [songs, isPlaying, currentSong]);
+    
     return (
         <SongContext.Provider
             value={songContext}

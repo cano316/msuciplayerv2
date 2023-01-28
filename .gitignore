@@ -3,3 +3,8 @@ node_modules
 
 # environment variables
 .env
+
+# google cloud storage
+musicplayerv2-375305-f8ce610d854f.json
+
+google_cloud_storage/
