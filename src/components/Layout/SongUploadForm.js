@@ -37,12 +37,14 @@ const reducer = (state, action) => {
 }
 
 const SongUploadForm = (props) => {
-    const songCtx = useContext(SongContext);
+    // const songCtx = useContext(SongContext);
 
     const [state, dispatch] = useReducer(reducer, initialState);
     const [isLoading, setIsLoading] = useState(false);
     const [formIsValid, setFormIsValid] = useState(false);
-
+    const [isTouched, setIsTouched] = useState(false);
+    const imageRegex = (/image\/.*/i);
+    const audioRegex = (/audio\/.*/i);
     const nameChangeHandler = (e) => {
         dispatch({ type: 'NAME', enteredName: e.target.value })
     };
@@ -61,7 +63,7 @@ const SongUploadForm = (props) => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setFormIsValid(state.songName.trim().length > 1 && state.artist.trim().length > 1 && state.imgSrc);
+            setFormIsValid(state.songName.trim().length > 1 && state.artist.trim().length > 1 && imageRegex.test(state.imgSrc.type) && audioRegex.test(state.audio.type));
         }, 500);
 
         return () => {
@@ -71,18 +73,19 @@ const SongUploadForm = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        // console.log(state)
-        // setIsLoading(true);
-        if (formIsValid) {
-            // this makes an API POST request
-            apiSongSubmit(state)
-                .then(data => console.log(data))
-                .catch(e => console.log(e))
-            // setIsLoading(false);
-            props.onHideUploadModal();
-        } else {
-            console.log('error');
-        }
+        // if (formIsValid) {
+        //     setIsLoading(true)
+        //     // this makes an API POST request
+        //     apiSongSubmit(state)
+        //         .then(data => {
+        //             console.log(data);
+        //             setIsLoading(false)
+        //         })
+        //         .catch(e => console.log(e))
+        //     props.onHideUploadModal();
+        // } else {
+        //     console.log('error');
+        // }
     }
 
     return (
@@ -105,12 +108,14 @@ const SongUploadForm = (props) => {
                 <Input
                     label="Cover Image"
                     type="file"
+                    accept="image/*"
                     placeholder="Image"
                     onChange={onImageFileChange}
                 />
                 <Input
                     label="Song File"
                     type="file"
+                    accept="audio/*"
                     placeholder="Upload audio file"
                     onChange={onSongFileChange}
                 />

@@ -1,0 +1,15 @@
+.audio-controls {
+    display: flex;
+}
+
+.audio-controls button {
+    background: none;
+    border: none;
+}
+
+.play-pause {
+    font-size: 40px;
+    width: 75px;
+    height: 75px;
+    color: #DA4167;
+}

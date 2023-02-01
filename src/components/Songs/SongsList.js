@@ -13,7 +13,7 @@ const SongsList = () => {
         getAllSongs().then(songs => {
             songCtx.setAllSongs(songs.reverse()); // reverse the data coming back from MongoDB
         });
-    }, [songCtx]);
+    }, []);
 
     const songsListElements = songCtx.songs.map(song => {
         return <SongItem
