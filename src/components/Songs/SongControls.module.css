@@ -1,5 +1,7 @@
 .audio-controls {
     display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .audio-controls button {
@@ -12,4 +14,14 @@
     width: 75px;
     height: 75px;
     color: #DA4167;
+}
+
+.progress-bar {
+    /* border: 1px solid red; */
+    text-align: center;
+    width: 100%;
+}
+
+.progress-bar input {
+    width: 80%;
 }

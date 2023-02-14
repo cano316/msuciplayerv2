@@ -4,11 +4,6 @@ import SongContext from '../../store/song-context';
 import SongControls from './SongControls';
 
 const SongItem = (props) => {
-    const songCtx = useContext(SongContext)
-
-    const playSongHandler = () => {
-        songCtx.playSong(props)
-    }
 
     return (
         <>

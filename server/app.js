@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path')
-require('dotenv').config({ path: '../.env' })
+require('dotenv').config({ path: '../.env' });
+const uploadToS3 = require('./s3')
 const cors = require('cors');
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false)
@@ -15,12 +16,7 @@ const upload = multer({
     //     fileSize: 5 * 1024 * 1024
     // }
 })
-const { Storage } = require('@google-cloud/storage');
-const storage = new Storage({
-    keyFilename: path.join(__dirname, '../google_cloud_storage/musicplayerv2-375305-f8ce610d854f.json'),
-    projectId: 'musicplayerv2-375305'
-})
-const bucket = storage.bucket('musicplayerv2');
+
 const DB_URL = process.env.DB_URL;
 
 main().catch(e => console.log(e));
@@ -44,36 +40,18 @@ app.get('/api/songs', async (req, res) => {
 app.post('/api/songs', upload.fields([{ name: 'audio' }, { name: 'imgSrc' }]), async (req, res) => {
     const files = req.files;
     const newSong = new Song(req.body);
-    for (let key in files) {
-        const file = files[key][0];
-        const blob = bucket.file(file.originalname);
+    for (let item in files) {
+        const file = files[item][0];
+        const result = await uploadToS3(file);
+        console.log(result);
 
-        const blobStream = blob.createWriteStream({
-            metadata: {
-                contentType: file.mimetype,
-            },
-            resumable: false
-        });
-        blobStream.on('error', err => {
-            next(err);
-            console.log(err);
-            return
-        });
-
-        blobStream.on('finish', () => {
-            // blob.makePublic();
-        });
-
-        blobStream.end(file.buffer);
-
-        const url = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
         if (file.fieldname === 'imgSrc') {
-            newSong.image = { url: url, filename: file.originalname }
+            newSong.image = { url: result.Location, filename: file.originalname }
         }
         if (file.fieldname === 'audio') {
-            newSong.audio = { url: url, filename: file.originalname }
+            newSong.audio = { url: result.Location, filename: file.originalname }
         }
-    }
+    };
 
     newSong.save((err, userInput) => {
         if (err)

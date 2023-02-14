@@ -73,19 +73,19 @@ const SongUploadForm = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        // if (formIsValid) {
-        //     setIsLoading(true)
-        //     // this makes an API POST request
-        //     apiSongSubmit(state)
-        //         .then(data => {
-        //             console.log(data);
-        //             setIsLoading(false)
-        //         })
-        //         .catch(e => console.log(e))
-        //     props.onHideUploadModal();
-        // } else {
-        //     console.log('error');
-        // }
+        if (formIsValid) {
+            setIsLoading(true)
+            // this makes an API POST request
+            apiSongSubmit(state)
+                .then(data => {
+                    console.log(data);
+                    setIsLoading(false)
+                })
+                .catch(e => console.log(e))
+            props.onHideUploadModal();
+        } else {
+            console.log('error');
+        }
     }
 
     return (

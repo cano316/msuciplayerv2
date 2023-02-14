@@ -1,36 +1,61 @@
-import { getSuggestedQuery } from "@testing-library/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import classes from './SongControls.module.css';
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"
+import SongContext from "../../store/song-context";
 const SongControls = (props) => {
+    // const songCtx = useContext(SongContext);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [length, setLength] = useState(0)
+    const [length, setLength] = useState(0); // in seconds
+    const [currentTimeMarker, setCurrentTimeMarker] = useState(0); // in seconds
+    const [timePassed, setTimePassed] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(0);
     const songRef = useRef();
+
     const clickHandler = (e) => {
         setIsPlaying(prev => !prev);
-        isPlaying ? songRef.current.pause() : songRef.current.play()
+        isPlaying ? songRef.current.pause() : songRef.current.play();
     };
-    useEffect(() => {
-        console.log(Math.floor(songRef.current.duration / 60) + Math.floor(songRef.current.duration % 60))
-        // const songInMinutes = Math.floor(songRef.current.duration / 60) + Math.floor(songRef.current.duration % 60)
-        // setLength(songInMinutes);
-    }, [])
+    const loadedDataHandler = () => {
+        const trackLength = convertToMinutes(songRef.current.duration)
+        setLength(songRef.current.duration);
+        setTimeLeft(trackLength)
+    }
+    const onPlaying = () => {
+        const currentTime = songRef.current.currentTime;
+        setCurrentTimeMarker(Math.floor((currentTime / length) * 100));
+        setTimePassed(convertToMinutes(currentTime))
+        setTimeLeft(convertToMinutes(length));
+
+    }
+
+    const convertToMinutes = (time) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return seconds < 10 ? `${minutes}:0${seconds}` : `${minutes}:${seconds}`;
+    }
     return (
         <div className={classes["audio-controls"]}>
             <audio
                 preload="metadata"
                 ref={songRef}
-                src={props.audio} />
-            <button>Back 30 Seconds</button>
+                src={props.audio}
+                onTimeUpdate={onPlaying}
+                onLoadedData={loadedDataHandler} />
+
+            <div className={classes["progress-bar"]}>
+                {/* Current Time */}
+                <span>{timePassed}</span>
+                {/* Progress Bar */}
+                <input type="range" value={currentTimeMarker} />
+                {/* Duration */}
+                <span>{timeLeft}</span>
+            </div>
             <button className={classes["play-pause"]} onClick={clickHandler}>{isPlaying ? <AiFillPauseCircle /> : <AiFillPlayCircle />}</button>
-            <button>Forward 30 Seconds</button>
 
-            {/* Current Time */}
 
-            {/* Progress Bar */}
 
-            {/* Duration */}
-            <p>Duration: {length}</p>
+
+
         </div>
     )
 };
