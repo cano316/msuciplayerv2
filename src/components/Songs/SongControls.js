@@ -3,7 +3,7 @@ import classes from './SongControls.module.css';
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"
 import SongContext from "../../store/song-context";
 const SongControls = (props) => {
-    // const songCtx = useContext(SongContext);
+
     const [isPlaying, setIsPlaying] = useState(false);
     const [length, setLength] = useState(0); // in seconds
     const [currentTimeMarker, setCurrentTimeMarker] = useState(0); // in seconds
@@ -20,6 +20,7 @@ const SongControls = (props) => {
         setLength(songRef.current.duration);
         setTimeLeft(trackLength)
     }
+
     const onPlaying = () => {
         const currentTime = songRef.current.currentTime;
         setCurrentTimeMarker(Math.floor((currentTime / length) * 100));
@@ -51,11 +52,6 @@ const SongControls = (props) => {
                 <span>{timeLeft}</span>
             </div>
             <button className={classes["play-pause"]} onClick={clickHandler}>{isPlaying ? <AiFillPauseCircle /> : <AiFillPlayCircle />}</button>
-
-
-
-
-
         </div>
     )
 };

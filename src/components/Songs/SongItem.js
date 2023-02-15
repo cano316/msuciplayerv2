@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import classes from './SongItem.module.css'
+import classes from './SongItem.module.css';
 import SongContext from '../../store/song-context';
 import SongControls from './SongControls';
 

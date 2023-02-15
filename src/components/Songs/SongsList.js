@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import SongItem from "./SongItem";
 import Card from "../UI/Card/Card";
-import classes from './SongsList.module.css'
+import classes from './SongsList.module.css';
 import SongContext from "../../store/song-context";
 import { getAllSongs } from "../../api";
 
