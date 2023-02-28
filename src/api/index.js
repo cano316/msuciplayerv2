@@ -7,7 +7,7 @@ export const getAllSongs = async () => {
         const results = await axios.get(`${baseUrl}/api/songs`)
         return results.data;
     } catch (error) {
-        return null
+        throw new Error('Something went wrong.')
     }
 };
 

@@ -1,10 +1,9 @@
 import classes from './AddSongButton.module.css';
 
-const AddSongButton = (props) => {
+const AddSongButton: React.FC<{ onClick: () => void }> = (props) => {
 
     return (
         <button className={classes.button} onClick={props.onClick}>
-            {/* <span className={classes.badge}>+</span> */}
             Add Song
         </button>
     )

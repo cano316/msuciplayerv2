@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import classes from './SongControls.module.css';
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"
-import SongContext from "../../store/song-context";
+
 const SongControls = (props) => {
 
     const [isPlaying, setIsPlaying] = useState(false);
@@ -47,7 +47,7 @@ const SongControls = (props) => {
                 {/* Current Time */}
                 <span>{timePassed}</span>
                 {/* Progress Bar */}
-                <input type="range" value={currentTimeMarker} />
+                <input type="range" value={currentTimeMarker} readOnly />
                 {/* Duration */}
                 <span>{timeLeft}</span>
             </div>

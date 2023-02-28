@@ -3,7 +3,6 @@ import Modal from "../UI/Modal";
 import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
 import classes from './SongUploadForm.module.css';
-import SongContext from "../../store/song-context";
 import { apiSongSubmit } from "../../api";
 
 const initialState = {
@@ -42,7 +41,7 @@ const SongUploadForm = (props) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [isLoading, setIsLoading] = useState(false);
     const [formIsValid, setFormIsValid] = useState(false);
-    const [isTouched, setIsTouched] = useState(false);
+    // const [isTouched, setIsTouched] = useState(false);
     const imageRegex = (/image\/.*/i);
     const audioRegex = (/audio\/.*/i);
     const nameChangeHandler = (e) => {
@@ -130,3 +129,6 @@ const SongUploadForm = (props) => {
 };
 
 export default SongUploadForm;
+
+// To Do:
+// 1. Convert to TSX

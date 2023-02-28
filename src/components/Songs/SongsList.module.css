@@ -12,3 +12,13 @@
     margin: 0;
     padding: 0;
 }
+
+.songs-loading {
+    text-align: center;
+    color: red;
+}
+
+.songs-error {
+    text-align: center;
+    color: red;
+}
