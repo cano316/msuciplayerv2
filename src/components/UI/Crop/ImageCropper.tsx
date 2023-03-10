@@ -49,7 +49,3 @@ const ImageCropper: React.FC<{ image: string, filename: string, type: string, on
 };
 
 export default ImageCropper;
-
-// To Do:
-// Add Button to confirm crop, set final crop to croppedImage
-// When the final crop is confirmed, hide the cropper, only show the cropped image

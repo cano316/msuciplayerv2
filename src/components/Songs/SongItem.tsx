@@ -18,7 +18,7 @@ const SongItem: React.FC<Song> = (props) => {
                     <SongControls audio={props.audio.url} />
                 </div>
             </li>
-            <hr />
+            {/* <hr /> */}
         </>
     )
 };

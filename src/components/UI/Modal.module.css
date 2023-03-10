@@ -13,6 +13,8 @@
     top: 10vh;
     left: 5%;
     width: 90%;
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
     background-color: white;
     padding: 1rem;
     border-radius: 14px;

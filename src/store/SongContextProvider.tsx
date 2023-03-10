@@ -6,6 +6,7 @@ import { Song } from "./song-context";
 type Props = {
     children?: React.ReactNode
 }
+
 const SongContextProvider: React.FC<Props> = (props) => {
     const [songs, setSongs] = useState<Song[]>([]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);

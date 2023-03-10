@@ -5,6 +5,7 @@ import Button from "../UI/Button/Button";
 import classes from './SongUploadForm.module.css';
 import { apiSongSubmit } from "../../api";
 import ImageCropper from "../UI/Crop/ImageCropper";
+import SongContext, { Song } from "../../store/song-context";
 
 type InitialStateType = {
     songName: string,
@@ -60,12 +61,12 @@ const reducer = (state: InitialStateType, action: Action): InitialStateType => {
 }
 
 const SongUploadForm: React.FC<{ onHideUploadModal: () => void }> = (props) => {
-    // const songCtx = useContext(SongContext);
+    const songCtx = useContext(SongContext);
 
     const [state, dispatch] = useReducer(reducer, initialState);
     const [isUpLoading, setIsUploading] = useState(false);
     const [formIsValid, setFormIsValid] = useState(false);
-    const [croppedImage, setCroppedImage] = useState();
+    const [imageIsCropped, setImageIsCropped] = useState(false);
 
     const imageRegex: RegExp = (/image\/.*/i);
     const audioRegex: RegExp = (/audio\/.*/i);
@@ -90,12 +91,13 @@ const SongUploadForm: React.FC<{ onHideUploadModal: () => void }> = (props) => {
 
     const onImageCrop = (image: File) => {
         if (!image) return;
-        dispatch({ type: 'IMG-CROP', payload: image })
+        dispatch({ type: 'IMG-CROP', payload: image });
+        setImageIsCropped(true);
     }
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setFormIsValid(state.songName.trim().length > 1 && state.artist.trim().length > 1 && imageRegex.test(state.imgSrc!.type) && audioRegex.test(state.audio!.type));
+            setFormIsValid(state.songName.trim().length > 1 && state.artist.trim().length > 1 && imageRegex.test(state.imgSrc!.type) && audioRegex.test(state.audio!.type) && imageIsCropped);
         }, 500);
 
         return () => {
@@ -109,8 +111,9 @@ const SongUploadForm: React.FC<{ onHideUploadModal: () => void }> = (props) => {
             setIsUploading(true)
             // this makes an API POST request
             apiSongSubmit(state)
-                .then(data => {
-                    console.log(data);
+                .then((response: any) => {
+                    console.log(response);
+                    songCtx.addSong(response.data);
                     setIsUploading(false);
                     props.onHideUploadModal();
                 })
@@ -118,7 +121,6 @@ const SongUploadForm: React.FC<{ onHideUploadModal: () => void }> = (props) => {
                     console.log(e);
                     setIsUploading(false)
                 })
-
             // console.log(state)
         } else {
             console.log('error');
@@ -170,5 +172,3 @@ const SongUploadForm: React.FC<{ onHideUploadModal: () => void }> = (props) => {
 export default SongUploadForm;
 
 // To Do:
-// 1. Convert to TSX
-// 2. Image crop before upload

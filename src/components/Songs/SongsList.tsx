@@ -9,7 +9,7 @@ import { getAllSongs } from "../../api";
 const SongsList: React.FC = () => {
     const songCtx = useContext(SongContext);
     const [isFetching, setIsFetching] = useState(false);
-    const [httpError, setHttpError] = useState()
+    const [httpError, setHttpError] = useState();
 
     useEffect(() => {
         setIsFetching(true);
@@ -17,7 +17,7 @@ const SongsList: React.FC = () => {
             songCtx.setAllSongs(songs.reverse()); // reverse the data coming back from MongoDB
         }).catch(e => setHttpError(e.message));
         setIsFetching(false)
-    }, []);
+    }, [songCtx.songs]);
 
     const songsListElements = songCtx.songs.map(song => {
         return <SongItem
@@ -52,6 +52,4 @@ const SongsList: React.FC = () => {
 export default SongsList;
 
 // To Do:
-// 1. convert page to TSX - done
-// 2. Add isLoading state and component
-// 3. Handle potential errors from API request
+// 1. Handle potential errors from API request
