@@ -10,20 +10,24 @@ export type Song = {
 
 type SongContextObject = {
     songs: Song[];
-    addSong: (song: Song) => void;
+    handleSongSubmission: (song: Song) => void;
+    newSongSubmitted: boolean;
     isPlaying: boolean;
     playSong: (song: Song) => void;
     currentSong: Song | null;
     setAllSongs: (data: Song[]) => void;
+    showMiniPlayer: boolean
 }
 
 const SongContext = React.createContext<SongContextObject>({
     songs: [],
-    addSong: (song) => { },
+    handleSongSubmission: (song) => { },
+    newSongSubmitted: false,
     isPlaying: false,
     playSong: (song) => { },
     currentSong: null,
-    setAllSongs: (data) => { }
+    setAllSongs: (data) => { },
+    showMiniPlayer: false
 });
 
 export default SongContext;

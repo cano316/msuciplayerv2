@@ -15,7 +15,10 @@ const SongItem: React.FC<Song> = (props) => {
                     <h2>{props.songName}</h2>
                     <h3>{props.artist}</h3>
                     {/* Audio Controls */}
-                    <SongControls audio={props.audio.url} />
+                    <SongControls
+                        audio={props.audio.url}
+                        song={props}
+                    />
                 </div>
             </li>
             {/* <hr /> */}

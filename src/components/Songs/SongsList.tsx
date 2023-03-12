@@ -14,10 +14,11 @@ const SongsList: React.FC = () => {
     useEffect(() => {
         setIsFetching(true);
         getAllSongs().then(songs => {
-            songCtx.setAllSongs(songs.reverse()); // reverse the data coming back from MongoDB
+            songCtx.setAllSongs(songs.reverse());
         }).catch(e => setHttpError(e.message));
         setIsFetching(false)
-    }, [songCtx.songs]);
+
+    }, [songCtx.newSongSubmitted]); // this causes an infinite loop
 
     const songsListElements = songCtx.songs.map(song => {
         return <SongItem
@@ -50,6 +51,3 @@ const SongsList: React.FC = () => {
 };
 
 export default SongsList;
-
-// To Do:
-// 1. Handle potential errors from API request

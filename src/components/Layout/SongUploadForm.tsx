@@ -112,13 +112,13 @@ const SongUploadForm: React.FC<{ onHideUploadModal: () => void }> = (props) => {
             // this makes an API POST request
             apiSongSubmit(state)
                 .then((response: any) => {
-                    console.log(response);
-                    songCtx.addSong(response.data);
+                    // console.log(response);
+                    songCtx.handleSongSubmission(response.data);
                     setIsUploading(false);
                     props.onHideUploadModal();
                 })
                 .catch(e => {
-                    console.log(e);
+                    // console.log(e);
                     setIsUploading(false)
                 })
             // console.log(state)
@@ -170,5 +170,3 @@ const SongUploadForm: React.FC<{ onHideUploadModal: () => void }> = (props) => {
 };
 
 export default SongUploadForm;
-
-// To Do:

@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Header from "./components/Layout/Header";
 import SongUploadForm from "./components/Layout/SongUploadForm";
 import SongContextProvider from "./store/SongContextProvider";
 import Main from "./components/Layout/Main";
 import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
+import SongContext from "./store/song-context";
 
 function App() {
+    const songCtx = useContext(SongContext);
     const [showUploadModal, setShowUploadModal] = useState(false);
-    const [songPlaying, setIsSongPlaying] = useState(true)
+
     const showUploadModalHandler = () => {
         setShowUploadModal(true)
     };
@@ -21,7 +23,7 @@ function App() {
             {showUploadModal && <SongUploadForm onHideUploadModal={hideUploadModalHandler} />}
             <Header onShowUploadModal={showUploadModalHandler} />
             <Main />
-            {songPlaying && <MusicPlayer />}
+            {songCtx.showMiniPlayer && <MusicPlayer />}
         </SongContextProvider>
     );
 }

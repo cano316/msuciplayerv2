@@ -11,11 +11,15 @@ const SongContextProvider: React.FC<Props> = (props) => {
     const [songs, setSongs] = useState<Song[]>([]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [currentSong, setCurrentSong] = useState<Song | null>(null);
+    const [newSongSubmitted, setNewSongSubmitted] = useState(false);
+    const [showMiniPlayer, setShowMiniPlayer] = useState(false);
 
-    const addSongHandler = (song: Song) => {
+    const handleSongSubmission = (song: Song) => {
         setSongs(prevState => {
             return [song, ...prevState]
-        })
+        });
+
+        setNewSongSubmitted(true);
     };
 
     const setAllSongs = (data: Song[]) => {
@@ -23,19 +27,22 @@ const SongContextProvider: React.FC<Props> = (props) => {
     }
 
     const playSongHandler = (song: Song) => {
-        setIsPlaying(true);
+        setIsPlaying(true); // maybe this could be in each song component?
         setCurrentSong(song);
+        setShowMiniPlayer(true);
     }
 
 
     const songContext = useMemo(() => { // add SongContextObject type here
         return {
             songs: songs,
-            addSong: addSongHandler,
+            handleSongSubmission: handleSongSubmission,
+            newSongSubmitted: newSongSubmitted,
             isPlaying: isPlaying,
             playSong: playSongHandler,
             currentSong: currentSong,
-            setAllSongs: setAllSongs
+            setAllSongs: setAllSongs,
+            showMiniPlayer: showMiniPlayer
         };
     }, [songs, isPlaying, currentSong]);
 
