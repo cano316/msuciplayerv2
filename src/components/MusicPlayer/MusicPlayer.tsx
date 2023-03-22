@@ -12,7 +12,8 @@ const MusicPlayer: React.FC = () => {
     }
 
     return (
-        <div className={classes["music-player"]}>
+        // <div className={classes["music-player"]}>
+        <div className="fixed bottom-0">
             <img
                 src={song!.image.url}
                 height="100%"
@@ -33,3 +34,5 @@ export default MusicPlayer;
 // To Do: 
 // 1. This is okay, but it takes a little bit for the images to load.
 // 2. Need to wait for an API call to finish?
+
+// What if I add the mini player inside the SongControls file?

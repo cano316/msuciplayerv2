@@ -4,20 +4,25 @@ import SongContext from '../../store/song-context';
 import SongControls from './SongControls';
 import { Song } from '../../store/song-context';
 
+type Props = {
+    song: Song,
+    index: number
+}
 
-const SongItem: React.FC<Song> = (props) => {
-
+const SongItem: React.FC<Props> = (props) => {
+    const { song, index } = props;
     return (
         <>
             <li className={classes.song}>
-                <img src={props.image.url} />
+                <img src={song.image.url} />
                 <div className={classes.headers}>
-                    <h2>{props.songName}</h2>
-                    <h3>{props.artist}</h3>
+                    <h2>{song.songName}</h2>
+                    <h3>{song.artist}</h3>
                     {/* Audio Controls */}
                     <SongControls
-                        audio={props.audio.url}
-                        song={props}
+                        audio={song.audio.url}
+                        song={song}
+                        index={index}
                     />
                 </div>
             </li>

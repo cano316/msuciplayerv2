@@ -47,9 +47,11 @@ const SongContextProvider: React.FC<Props> = (props) => {
     }, [songs, isPlaying, currentSong]);
 
     return (
-        <SongContext.Provider value={songContext} >
-            {props.children}
-        </SongContext.Provider>
+        <div className="relative">
+            <SongContext.Provider value={songContext} >
+                {props.children}
+            </SongContext.Provider>
+        </div>
     )
 };
 

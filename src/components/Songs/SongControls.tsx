@@ -3,7 +3,7 @@ import classes from './SongControls.module.css';
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"
 import SongContext, { Song } from "../../store/song-context";
 
-const SongControls: React.FC<{ audio: string, song: Song }> = (props) => {
+const SongControls: React.FC<{ audio: string, song: Song, index: number }> = (props) => {
     const songCtx = useContext(SongContext)
     const [isPlaying, setIsPlaying] = useState(false);
     const [length, setLength] = useState(0); // in seconds

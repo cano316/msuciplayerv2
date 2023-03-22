@@ -18,16 +18,18 @@ const SongsList: React.FC = () => {
         }).catch(e => setHttpError(e.message));
         setIsFetching(false)
 
-    }, [songCtx.newSongSubmitted]); // this causes an infinite loop
+    }, [songCtx.newSongSubmitted]);
 
-    const songsListElements = songCtx.songs.map(song => {
+    const songsListElements = songCtx.songs.map((song, i) => {
         return <SongItem
             key={song._id}
-            _id={song._id}
-            songName={song.songName}
-            artist={song.artist}
-            image={song.image}
-            audio={song.audio}
+            // _id={song._id}
+            // songName={song.songName}
+            // artist={song.artist}
+            // image={song.image}
+            // audio={song.audio}
+            song={song}
+            index={i}
         />
     });
 
